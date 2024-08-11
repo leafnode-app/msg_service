@@ -21,3 +21,7 @@ The internal API on the leafnode application will be responsible for taking the 
 
 # Architecture
 ![High-Level Architecture](./docs/high%20level%20overview.svg)
+
+Note: This is the high level overview of the architecture. The user interaction, services that will be used and how the systems will interact to get the relevvant data in order to execute the nodes.
+
+There will be systems setup in place to manage the message load, queues, retrys etc. This will be setup to allow the system to scale and be able to handle the load from the services (multiple) that will be sending messages to the system.
