@@ -1,4 +1,4 @@
-defmodule MsgService.Server.Queue do
+defmodule MsgService.Queue do
   @moduledoc """
   Queue Server used to add backpressure and manage the processing of messages
   """
@@ -18,8 +18,8 @@ defmodule MsgService.Server.Queue do
     Init the server payload
   """
   def init(opts) do
+    IO.inspect(opts, label: "INIT QUEUE")
     {:ok, opts}
-    :ok
   end
 
   # TODO: helper functions that will do the GenServer calls

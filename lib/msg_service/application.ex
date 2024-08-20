@@ -16,7 +16,8 @@ defmodule MsgService.Application do
       # Start a worker by calling: MsgService.Worker.start_link(arg)
       # {MsgService.Worker, arg},
       # Start to serve requests, typically the last entry
-      MsgServiceWeb.Endpoint
+      MsgServiceWeb.Endpoint,
+      {MsgService.Queue, %{}}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

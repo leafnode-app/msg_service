@@ -57,6 +57,12 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Whitelist of allowed domains
+config :msg_service, whitelist: [
+  "localhost",
+  # Add the domains of the allowed server to request against the mesage service
+]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
