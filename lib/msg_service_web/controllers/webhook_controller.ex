@@ -15,11 +15,10 @@ defmodule MsgServiceWeb.WebhookController do
   Handle webhook
   """
   def index(conn, params) do
-    IO.inspect(conn, label: "conn")
-    IO.inspect(params, label: "params")
-
     case message_type(params) do
-      {:ok, :local} ->
+      {:ok, struct} ->
+        IO.inspect(struct, label: "SENDING STRUCT TO QUEUE")
+        # TODO: look for specific data to remove from the struct when sending
         # TODO: send the request to the queue
         send_resp(conn, 200, Jason.encode!(%{status: @messages.ok}))
       _ -> send_resp(conn, 404, Jason.encode!(%{status: @messages.service_not_found}))
@@ -28,11 +27,13 @@ defmodule MsgServiceWeb.WebhookController do
   end
 
   # handle the event type
-  # TODO: look for a more generic way based on the webhook data
-  defp message_type(event) when event.type == "local" do
-    {:ok, :local}
-  end
-  defp message_type(_event) do
-    {:error, :not_found}
+  # TODO: look for a more generic way based on the webhook data - this assumes whatsapp only
+  defp message_type(payload) do
+    case Whatsapp.to_struct(payload) do
+      {:ok, payload} ->
+        {:ok, payload}
+      _ ->
+        {:error, @messages.invalid_message}
+    end
   end
 end
