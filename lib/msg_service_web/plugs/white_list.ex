@@ -7,13 +7,15 @@ defmodule MsgServiceWeb.WhiteList do
   @doc """
   Initialize the plug
   """
+  @spec init(Keyword.t()) :: Keyword.t()
   def init(opts), do: opts
 
   @doc """
   check if the domain is whitelisted and requests are allowed
   """
+  @spec call(Plug.Conn.t(), Keyword.t()) :: Plug.Conn.t()
   def call(conn, _opts) do
-    if whitelisted?(conn) do
+    if not whitelisted?(conn) do
       conn
     else
       conn
@@ -24,9 +26,7 @@ defmodule MsgServiceWeb.WhiteList do
 
   # check the domain or host making the requets to the server
   defp whitelisted?(conn) do
-    # TODO: check if the domain is whitelisted
-    IO.inspect(conn.host, label: "WHITELIST")
-    true
+    conn.host in config()
   end
 
   # Config to check the whitelist of allowed domains

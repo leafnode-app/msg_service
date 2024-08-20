@@ -10,6 +10,7 @@ defmodule MsgService.Queue do
   @doc """
     Start the server
   """
+  @spec start_link(Keyword.t()) :: GenServer.on_start()
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
@@ -17,6 +18,7 @@ defmodule MsgService.Queue do
   @doc """
     Init the server payload
   """
+  @spec init(Keyword.t()) :: {:ok, Keyword.t()}
   def init(opts) do
     IO.inspect(opts, label: "INIT QUEUE")
     {:ok, opts}
