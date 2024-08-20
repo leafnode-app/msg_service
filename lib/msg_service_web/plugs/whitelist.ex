@@ -15,6 +15,7 @@ defmodule MsgServiceWeb.WhiteList do
   """
   @spec call(Plug.Conn.t(), Keyword.t()) :: Plug.Conn.t()
   def call(conn, _opts) do
+    IO.inspect(conn.host, label: "HOST")
     if whitelisted?(conn) do
       conn
     else

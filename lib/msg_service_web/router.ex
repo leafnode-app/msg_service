@@ -21,6 +21,7 @@ defmodule MsgServiceWeb.Router do
   scope "/webhook", MsgServiceWeb do
     pipe_through [:check_whitelist, :api]
     post "/", WebhookController, :index
+    # TODO: we check against the routes that are not found and return some 404
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

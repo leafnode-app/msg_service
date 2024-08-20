@@ -60,6 +60,7 @@ config :phoenix, :json_library, Jason
 # Whitelist of allowed domains
 config :msg_service, whitelist: [
   "localhost",
+  "wildcat-powerful-molly.ngrok-free.app"
   # Add the domains of the allowed server to request against the mesage service
 ]
 
