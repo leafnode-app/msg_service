@@ -20,10 +20,12 @@ defmodule MsgServiceWeb.Router do
     get "/", PageController, :home
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", MsgServiceWeb do
-  #   pipe_through :api
-  # end
+  scope "/webhook", MsgServiceWeb do
+    pipe_through :api
+
+    # The route used for extern
+    post "/", WebhookController, :index
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:msg_service, :dev_routes) do
