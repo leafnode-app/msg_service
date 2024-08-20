@@ -11,7 +11,7 @@ defmodule MsgServiceWeb.WebhookController do
     IO.inspect(conn)
     # Here we add the event check to decide if we need to handle it
     # Either respond to push to queue
-    send_resp(conn, 200, "ok")
+    send_resp(conn, 200, Jason.encode!(%{status: "ok"}))
   end
 
   # handle the event type
