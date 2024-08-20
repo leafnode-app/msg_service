@@ -14,12 +14,12 @@ defmodule MsgServiceWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :whitelist do
+  pipeline :check_whitelist do
     plug MsgServiceWeb.WhiteList
   end
 
   scope "/webhook", MsgServiceWeb do
-    pipe_through [:whitelist, :api]
+    pipe_through [:check_whitelist, :api]
     post "/", WebhookController, :index
   end
 

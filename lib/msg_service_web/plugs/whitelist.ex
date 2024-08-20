@@ -1,6 +1,6 @@
 defmodule MsgServiceWeb.WhiteList do
   @moduledoc """
-  Plug to check if the request is coming from a whitelisted IP
+  Plug to check if the request is coming from a whitelisted domain
   """
   import Plug.Conn
 
@@ -15,7 +15,7 @@ defmodule MsgServiceWeb.WhiteList do
   """
   @spec call(Plug.Conn.t(), Keyword.t()) :: Plug.Conn.t()
   def call(conn, _opts) do
-    if not whitelisted?(conn) do
+    if whitelisted?(conn) do
       conn
     else
       conn

@@ -7,6 +7,7 @@ defmodule MsgService.Queue do
   # rate limit of messages per specific item
   @rate_limit 5_000
   @stale_time 10_000
+
   @doc """
     Start the server
   """
