@@ -15,8 +15,8 @@ defmodule MsgServiceWeb.WhiteList do
   """
   @spec call(Plug.Conn.t(), Keyword.t()) :: Plug.Conn.t()
   def call(conn, _opts) do
-    IO.inspect(conn.host, label: "HOST")
     if whitelisted?(conn) do
+      # TODO: add the domain of the server that made the request based off enum i.e whatsapp, email, sms etc
       conn
     else
       conn
