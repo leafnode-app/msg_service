@@ -7,10 +7,6 @@
 # General application configuration
 import Config
 
-config :msg_service,
-  ecto_repos: [MsgService.Repo],
-  generators: [timestamp_type: :utc_datetime]
-
 # Configures the endpoint
 config :msg_service, MsgServiceWeb.Endpoint,
   url: [host: "localhost"],

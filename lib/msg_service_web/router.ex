@@ -14,16 +14,8 @@ defmodule MsgServiceWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", MsgServiceWeb do
-    pipe_through :browser
-
-    get "/", PageController, :home
-  end
-
   scope "/webhook", MsgServiceWeb do
     pipe_through :api
-
-    # The route used for extern
     post "/", WebhookController, :index
   end
 

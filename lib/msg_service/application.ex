@@ -9,7 +9,6 @@ defmodule MsgService.Application do
   def start(_type, _args) do
     children = [
       MsgServiceWeb.Telemetry,
-      MsgService.Repo,
       {DNSCluster, query: Application.get_env(:msg_service, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: MsgService.PubSub},
       # Start the Finch HTTP client for sending emails
