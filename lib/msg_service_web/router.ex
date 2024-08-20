@@ -24,6 +24,11 @@ defmodule MsgServiceWeb.Router do
     # TODO: we check against the routes that are not found and return some 404
   end
 
+  scope "/ping", MsgServiceWeb do
+    pipe_through [:check_whitelist, :api]
+    get "/", PingController, :ping
+  end
+
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:msg_service, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
