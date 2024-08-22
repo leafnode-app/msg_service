@@ -1,6 +1,7 @@
 defmodule MsgService.Queue do
   @moduledoc """
   Queue Server used to add backpressure and manage the processing of messages
+  Sliding window log algorithm is used to manage the rate limit
   """
   use GenServer
 

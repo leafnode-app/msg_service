@@ -27,7 +27,6 @@ defmodule MsgServiceWeb.WebhookController do
   end
 
   # handle the event type
-  # TODO: look for a more generic way based on the webhook data - this assumes whatsapp only
   # TODO: this would need to use the conn data to get the service caller type which is set on the plug
   defp message_type(payload) do
     case Whatsapp.to_struct(payload) do
