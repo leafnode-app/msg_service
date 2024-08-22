@@ -9,7 +9,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 # What is MsgService?
 
-The serivice will be used in order to listen and get message from other application sthat can then be passed off to the main leafnode application to trigger nodes. The messages can be from email, sms, whatsapp etc.
+The serivice will be used in order to listen and get message from other application sthat can then be passed off to the main leafnode application to trigger nodes. The messages can be from anything but maily will be used to handle email hook information.
 
 # How does it work?
 
