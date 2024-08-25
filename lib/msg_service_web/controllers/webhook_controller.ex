@@ -14,15 +14,21 @@ defmodule MsgServiceWeb.WebhookController do
   @doc """
   Handle webhook
   """
+  # TODO: we need to check hooks for opened, bounced and delivered (index)
+  # TOOD: we need to make sure if there is an error we dont return a 200 especially if its bounced so we dont have to deal with them retrying
+  # TODO: only nodes that exist we need to manage so we need to make sure we make requets to the main app to check the generated mail and it needs
   def index(conn, params) do
-    case message_type(params) do
-      {:ok, struct} ->
-        IO.inspect(struct, label: "SENDING STRUCT TO QUEUE")
-        # TODO: look for specific data to remove from the struct when sending
-        # TODO: send the request to the queue
-        send_resp(conn, 200, Jason.encode!(%{status: @messages.ok}))
-      _ -> send_resp(conn, 404, Jason.encode!(%{status: @messages.service_not_found}))
-    end
+    IO.inspect(conn, label: "LOGGING WEBHOOK CONN DATA")
+    IO.inspect(params, label: "LOGGING WEBHOOK PARAMS")
+    send_resp(conn, 200, Jason.encode!(%{status: @messages.ok}))
+    # case message_type(params) do
+    #   {:ok, struct} ->
+    #     IO.inspect(struct, label: "SENDING STRUCT TO QUEUE")
+    #     # TODO: look for specific data to remove from the struct when sending
+    #     # TODO: send the request to the queue
+    #     send_resp(conn, 200, Jason.encode!(%{status: @messages.ok}))
+    #   _ -> send_resp(conn, 404, Jason.encode!(%{status: @messages.service_not_found}))
+    # end
     # Here we add the event check to decide if we need to handle it
   end
 

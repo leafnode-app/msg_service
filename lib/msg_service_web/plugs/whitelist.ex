@@ -13,6 +13,7 @@ defmodule MsgServiceWeb.WhiteList do
   @doc """
   check if the domain is whitelisted and requests are allowed
   """
+  # TODO: we can check user agent as the host will always be the current domain and will be false positive in the case for mail
   @spec call(Plug.Conn.t(), Keyword.t()) :: Plug.Conn.t()
   def call(conn, _opts) do
     if whitelisted?(conn) do

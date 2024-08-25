@@ -5,10 +5,6 @@ defmodule MsgService.Queue do
   """
   use GenServer
 
-  # rate limit of messages per specific item
-  @rate_limit 5_000
-  @stale_time 10_000
-
   @doc """
     Start the server
   """
@@ -28,6 +24,4 @@ defmodule MsgService.Queue do
 
   # TODO: helper functions that will do the GenServer calls
   # TODO add helper methods for process event, get quueue by type, helper function to check rate limit per key
-  # TOOD: process or try again for the user if rate limited
-  # TODO: function to check cleanup of all keys that are longer older than 10s
 end
