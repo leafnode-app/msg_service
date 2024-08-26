@@ -5,6 +5,8 @@ defmodule MsgService.Queue do
   """
   use GenServer
 
+  @error "Invalid type"
+
   @doc """
     Start the server
   """
@@ -22,6 +24,24 @@ defmodule MsgService.Queue do
     {:ok, opts}
   end
 
-  # TODO: helper functions that will do the GenServer calls
-  # TODO add helper methods for process event, get quueue by type, helper function to check rate limit per key
+  @doc """
+    Trigger the message
+  """
+  @spec handle_cast({:trigger, term()}, Keyword.t()) :: {:noreply, Keyword.t()}
+  def handle_cast({:trigger, payload}, state) do
+    # TODO: API call to the main app to trigger the nodes
+    IO.inspect(payload, label: "TRIGGER MESSAGE")
+    {:noreply, state}
+  end
+
+  @doc """
+    Trigger the message - async
+  """
+  @spec trigger(atom(), map()) :: any()
+  def trigger(type, payload) when type === :email do
+    {:ok, GenServer.cast(__MODULE__, {:trigger, payload})}
+  end
+  def trigger(_type, _payload) do
+    {:error, @error}
+  end
 end

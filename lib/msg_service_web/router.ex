@@ -14,14 +14,14 @@ defmodule MsgServiceWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :check_whitelist do
-    plug MsgServiceWeb.WhiteList
+  # This checks and sets based on having multiple types in future
+  pipeline :service_type do
+    plug MsgServiceWeb.ServiceType
   end
 
   scope "/webhook", MsgServiceWeb do
-    pipe_through [:check_whitelist, :api]
+    pipe_through [:service_type, :api]
     post "/", WebhookController, :index
-    # TODO: we check against the routes that are not found and return some 404
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
