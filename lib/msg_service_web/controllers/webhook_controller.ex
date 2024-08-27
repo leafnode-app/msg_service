@@ -24,9 +24,9 @@ defmodule MsgServiceWeb.WebhookController do
 
   # handle the event type
   defp trigger_message_type(type, params) when type === :email do
-    struct = Email.to_struct(params)
-    MsgService.Queue.trigger(:email, struct)
-    {:ok, struct}
+    # {_status, struct} = Email.to_struct(params)
+    MsgService.Queue.trigger(:email, params)
+    {:ok, params}
   end
   defp trigger_message_type(_type, _params) do
     {:error, @messages.invalid_message}

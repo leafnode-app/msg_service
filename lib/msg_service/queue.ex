@@ -27,10 +27,9 @@ defmodule MsgService.Queue do
   @doc """
     Trigger the message
   """
-  @spec handle_cast({:trigger, term()}, Keyword.t()) :: {:noreply, Keyword.t()}
+  @spec handle_cast({:trigger, map()}, Keyword.t()) :: {:noreply, Keyword.t()}
   def handle_cast({:trigger, payload}, state) do
-    # TODO: API call to the main app to trigger the nodes
-    IO.inspect(payload, label: "TRIGGER MESSAGE")
+    MsgService.Client.Http.post("/internal/trigger/" <> payload["To"], payload)
     {:noreply, state}
   end
 
