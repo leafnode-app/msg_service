@@ -7,8 +7,8 @@ defmodule MsgService.Server.SpamHandler do
 
   # Unix timestamp of 15min we need to remove this from the current time to check
   # @interval 900
-  @interval 10
-  @rate_limit 10
+  @interval 900
+  @rate_limit 5
 
   @doc """
     Start the server
