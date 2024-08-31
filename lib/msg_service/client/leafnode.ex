@@ -13,7 +13,7 @@ defmodule MsgService.Client.Leafnode do
   """
   @spec post(Tesla.Env.url(), Tesla.Env.body()) :: Tesla.Env.result()
   def post(path, params) do
-    Tesla.post(path, params)
+    post(path, params)
   end
 
   # Configuration for internal API services calls against main application

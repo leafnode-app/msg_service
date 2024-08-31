@@ -6,7 +6,7 @@ defmodule MsgService.Server.SpamHandler do
   use GenServer
 
   # Unix timestamp of 15min we need to remove this from the current time to check
-  # @interval 900
+  @blacklist_timeout 900_000
   @interval 900
   @rate_limit 5
 
@@ -23,6 +23,7 @@ defmodule MsgService.Server.SpamHandler do
   """
   @spec init(Keyword.t()) :: {:ok, Keyword.t()}
   def init(opts) do
+    # TODO: Need to init by checking all blacklisted items and grant access on server restart
     {:ok, opts}
   end
 
@@ -90,7 +91,18 @@ defmodule MsgService.Server.SpamHandler do
           user_state.count >= @rate_limit ->
             IO.inspect("TOO many REQUEST - BLOCKING")
             # TODO: We need to blacklist the user here - reqeust to service
-            {:blocked, user_state}
+            {_, %Tesla.Env{status: status, body: body} = resp} = MsgService.Client.PostMark.add_trigger_rule(user)
+            IO.inspect(resp, label: "POSTMARK")
+            # We reset the blocked user
+            case block_status(status) do
+              :blocked ->
+                # Task that will remove the blacklist rule after a set time
+                remove_rule(body["ID"])
+                {:blocked, user_state(:init)}
+              _ ->
+                # Incase there was some error, we try again when a new request comes in
+                {:blocked, user_state}
+            end
 
           # Increment the request count
           true ->
@@ -112,5 +124,22 @@ defmodule MsgService.Server.SpamHandler do
       count: Map.get(user, :count) + 1,
       last_ts: DateTime.utc_now() |> DateTime.to_unix(:second)
     }
+  end
+
+  # check the statys of the response to know if the blacklist was successful
+  defp block_status(status) when status in [200] do
+    :blocked
+  end
+  defp block_status(_status), do: :error
+
+  # task that will grant the user access after a set time
+  defp remove_rule(id) do
+    IO.inspect("BLOCKED")
+    # TODO: create a Job service, Genserver, to remove the rule
+    # This is for now, not ideal, new process timed
+    Task.start(fn ->
+      Process.sleep(@blacklist_timeout)
+      MsgService.Client.PostMark.remove_trigger_rule(id)
+    end)
   end
 end
