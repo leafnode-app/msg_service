@@ -35,3 +35,6 @@ msg_service-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Locla env file used for testing env variables for configs
+local.env
+

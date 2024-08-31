@@ -3,7 +3,6 @@ defmodule MsgServiceWeb.WebhookController do
   Webhook Controller
   """
   use MsgServiceWeb, :controller
-  alias MsgService.Schema.Email
 
   @messages %{
     service_not_found: "Service not found",
@@ -14,6 +13,7 @@ defmodule MsgServiceWeb.WebhookController do
   @doc """
   Handle webhook
   """
+  @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, params) do
     case trigger_message_type(conn.private[:service_type], params) do
       {:ok, _struct} ->
@@ -25,7 +25,7 @@ defmodule MsgServiceWeb.WebhookController do
   # handle the event type
   defp trigger_message_type(type, params) when type === :email do
     # {_status, struct} = Email.to_struct(params)
-    MsgService.Queue.trigger(:email, params)
+    MsgService.Server.Queue.trigger(:email, params)
     {:ok, params}
   end
   defp trigger_message_type(_type, _params) do

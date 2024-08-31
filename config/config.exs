@@ -58,8 +58,9 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Configure the endpoint
+# TODO: have this be env variable
 config :msg_service, :internal_services,
-  leafnode: "http://localhost:4000"
+  leafnode: ""
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

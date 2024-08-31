@@ -17,7 +17,8 @@ defmodule MsgService.Application do
       # {MsgService.Worker, arg},
       # Start to serve requests, typically the last entry
       MsgServiceWeb.Endpoint,
-      {MsgService.Queue, %{}}
+      {MsgService.Server.Queue, %{}},
+      {MsgService.Server.SpamHandler, %{}}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
