@@ -19,6 +19,16 @@ defmodule MsgServiceWeb.Router do
     plug MsgServiceWeb.ServiceType
   end
 
+  # we make sure the application is sending a valid key
+  pipeline :app_key do
+    plug MsgServiceWeb.AppKeyCheck
+  end
+
+  scope "/email", MsgServiceWeb do
+    pipe_through [:app_key, :api]
+    post "/send", EmailController, :send
+  end
+
   scope "/webhook", MsgServiceWeb do
     pipe_through [:service_type, :api]
     post "/", WebhookController, :index

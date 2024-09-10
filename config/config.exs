@@ -62,6 +62,8 @@ config :phoenix, :json_library, Jason
 config :msg_service, :internal_services,
   leafnode: ""
 
+config :msg_service, :app_key, ""
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
