@@ -4,8 +4,8 @@ defmodule MsgService.Client.Leafnode do
   """
   use Tesla, only: [:post]
 
-  plug Tesla.Middleware.BaseUrl, config(:leafnode)
-  plug Tesla.Middleware.Headers, [{"content-type", "application/json"}]
+  plug Tesla.Middleware.BaseUrl, config(:leaf_node).host
+  plug Tesla.Middleware.Headers, [{"content-type", "application/json"}, {"x-api-key", config(:leaf_node).app_key}]
   plug Tesla.Middleware.JSON
 
   @doc """

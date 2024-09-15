@@ -30,7 +30,7 @@ defmodule MsgService.Server.Queue do
   def handle_cast({:trigger, request}, state) do
     {:ok, struct} = MsgService.Schema.Email.to_struct(request)
     # TODO: call the spam service to ask if we can
-    {_, %Tesla.Env{status: status}} = MsgService.Client.Leafnode.post("/internal/trigger/" <> struct.to, request)
+    {_, %Tesla.Env{status: status}} = MsgService.Client.Leafnode.post("/internal/trigger", request)
 
     # Here we check if we should do anything with what could be potential spamming
     spam_processing(status, struct)

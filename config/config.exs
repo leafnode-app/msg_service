@@ -60,7 +60,10 @@ config :phoenix, :json_library, Jason
 # Configure the endpoint
 # TODO: have this be env variable
 config :msg_service, :internal_services,
-  leafnode: ""
+leaf_node: %{
+    host: "",
+    app_key: ""
+  }
 
 config :msg_service, :app_key, ""
 

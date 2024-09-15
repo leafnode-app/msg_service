@@ -74,9 +74,11 @@ config :phoenix_live_view,
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
 
-# TODO: have this be env variable
 config :msg_service, :internal_services,
-  leafnode: "http://localhost:5001"
+  leaf_node: %{
+    host: "http://localhost:5001",
+    app_key: "123"
+  }
 
 config :msg_service, :external_services,
   postmark: {"https://api.postmarkapp.com", System.get_env("POSTMARK_API_KEY")}
