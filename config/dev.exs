@@ -81,6 +81,9 @@ config :msg_service, :internal_services,
   }
 
 config :msg_service, :external_services,
-  postmark: {"https://api.postmarkapp.com", System.get_env("POSTMARK_API_KEY")}
+  postmark: %{
+    host: "https://api.postmarkapp.com",
+    app_key: System.get_env("POSTMARK_API_KEY")
+  }
 
 config :msg_service, :app_key, "123"
